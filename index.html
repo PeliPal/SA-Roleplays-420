@@ -1,11 +1,803 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Página de prueba<title>
+    <title>Wane - the-poker-table-livescne</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        /* === GENERAL === */
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, Monospace;
+    white-space: pre-wrap;
+}
+
+.pre--multiline {
+    margin-top: 4px;
+    padding: 8px;
+    border: 2px solid;
+    border-radius: 5px;    
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+}
+
+.emoji {
+    width: 24px;
+    height: 24px;
+    margin: 0 1px;
+    vertical-align: middle;
+}
+
+.emoji--small {
+    width: 16px;
+    height: 16px;
+}
+
+.emoji--large {
+    width: 32px;
+    height: 32px;
+}
+
+.mention {
+    font-weight: 600;
+}
+
+/* === INFO === */
+
+.info {
+    display: flex;
+    max-width: 100%;
+    margin: 0 5px 10px 5px;    
+}
+
+.info__guild-icon-container {
+    flex: 0;
+}
+
+.info__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.info__metadata {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.info__guild-name {
+    font-size: 1.4em;
+}
+
+.info__channel-name {
+    font-size: 1.2em;
+}
+
+.info__channel-topic {
+    margin-top: 2px;
+}
+
+.info__channel-message-count {
+    margin-top: 2px;
+}
+
+.info__channel-date-range {
+    margin-top: 2px;
+}
+
+/* === CHATLOG === */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: flex;
+    margin: 0 10px;
+    padding: 15px 0;
+    border-top: 1px solid;
+}
+
+.chatlog__author-avatar-container {
+    flex: 0;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    flex: 1;
+    min-width: 50%;
+    margin-left: 20px;
+}
+
+.chatlog__author-name {
+    font-size: 1em;
+}
+
+.chatlog__timestamp {
+    margin-left: 5px;
+    font-size: .75em;
+}
+
+.chatlog__content {
+    padding-top: 5px;
+    font-size: .9375em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 5px;
+    font-size: .8em;
+}
+
+.chatlog__attachment {
+    margin: 5px 0;
+}
+
+.chatlog__attachment-thumbnail {
+    max-width: 50%;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__embed {
+    display: flex;
+    max-width: 520px;
+    margin-top: 5px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 4px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 10px;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    width: 100%;
+    display: flex;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.chatlog__embed-author-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 9px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: .875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 4px;
+    font-size: .875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 10px;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 4px;
+    font-size: .875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-size: .875em;
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 20px;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 10px;
+}
+
+.chatlog__embed-image {    
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 10px;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-weight: 600;
+    font-size: .75em;
+}
+
+.chatlog__reactions {
+    display: flex;    
+}
+
+.chatlog__reaction {
+    margin: 6px 2px 2px 2px;
+    padding: 2px 6px 2px 2px;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-emoji {
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+.chatlog__reaction-count {
+    font-size: .875em;
+    vertical-align: middle;
+}
+/* === GENERAL === */
+
+body {
+    background-color: #36393e;
+    color: #ffffffb3;
+}
+
+a {
+    color: #0096cf;
+}
+
+.pre {
+    background-color: #2f3136;
+}
+
+.pre--multiline {
+    border-color: #282b30;
+    color: #839496;
+}
+
+.mention {
+    background-color: #738bd71a;
+    color: #7289da;
+}
+
+/* === INFO === */
+
+.info__guild-name {
+    color: #ffffff;
+}
+
+.info__channel-name {
+    color: #ffffff;
+}
+
+.info__channel-topic {
+    color: #ffffff;
+}
+
+/* === CHATLOG === */
+
+.chatlog__message-group {
+    border-color: #ffffff0a;
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: #ffffff33;
+}
+
+.chatlog__edited-timestamp {
+    color: #ffffff33;
+}
+
+.chatlog__embed-content-container {
+    background-color: #2e30364d;
+    border-color: #2e303699;
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: #ffffff99;
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: #ffffff99;
+}
+
+.chatlog__embed-footer {
+    color: #ffffff99;
+}
+
+.chatlog__reaction {
+    background-color: #ffffff0a;
+}
+
+.chatlog__reaction-count {
+    color: #ffffff4d;
+}
+    </style>
 </head>
 <body>
-  <h1>Hola amiguitos!</h1>
-  <footer>gpuma 2017</footer>
+    
+<div class="info">
+    <div class="info__guild-icon-container">
+        <img class="info__guild-icon" src="https://cdn.discordapp.com/icons/350307558256541706/73ee91020bfb19497d5c87dda605dd3b.png" />
+    </div>
+    <div class="info__metadata">
+        <div class="info__guild-name">Wane</div>
+        <div class="info__channel-name">the-poker-table-livescne</div>
+        
+
+        <div class="info__channel-message-count">22 messages</div>
+        
+    </div>
+</div>
+
+<div class="chatlog">
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 12:35 PM</span>
+
+                        <div class="chatlog__content">
+                            **--------------<br />Adelaide&#39;s little chat<br />--------------**<br /><br />The man grinned - a little wider than his jovial-yet-polite persona would ordinarily allow.<br /><br />&quot;That would be most pleasing indeed,&quot; he replied with a nod and turned towards the bar.<br /><br />&quot;Two on the house, Peter,&quot; he asked, raising his hand so barely it couldn&#39;t really be seen from afar. Yet, somehow his leisurely voice had cut straight through the bustle surrounding the counter and after a short while a pale dealer brought two glasses filled with some thick, reddish concoction.<br /><br />&quot;This one doesn&#39;t have a name yet, but I&#39;m certain it&#39;ll become the new house specialty,&quot; Hangman explained excitingly as he raised his glass. &quot;I&#39;m hoping someone out here will find a most pertinent one. After all, you are correct in that this event tends to bring the most interesting clientele.&quot;
+
+                                <span class="chatlog__edited-timestamp" title="18-Sep-18 12:35 PM">(edited)</span>
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 01:02 PM</span>
+
+                        <div class="chatlog__content">
+                            Adelaide swirls the glass, not wine. It almost reminds her of half frozen juice pulp. She sniffs. Cinnamon...peach? Something of iron and salt. Sweet and bitter. She loves the smell already, and takes a deep inhale before sipping it. Heat. Like a lightning bolt in her jaw. Sharp and clear. It crawls into her sinuses. She sneezes. <br /><br />&quot;I can say without a doubt this is among the finest drinks I have ever had.&quot; <br /><br />Another sip. The warmth drips down her shoulders, into her arms and fingers. <br /><br />&quot;Where does it get that zing?&quot;
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 01:16 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;I&#39;m afraid that one is my secret ingredient,&quot; the man chuckled. &quot;But I&#39;ll give you a hint: we got it from Mexico. I thought of maybe naming it <i>Sanguine Sunset</i> but then decided it might be a tad pretentious. Out here, we mostly serve miners, you know?&quot;<br /><br />Hangman took the opportunity of a pause to take another sip. You could tell the man was truly proud of his recipe.<br /><br />&quot;Anyhow, I&#39;ve noticed you&#39;re... What was the word? The opposite of sanguine... Well, you do not seem so eager as some to take part in the game. I&#39;ve been wondering if you&#39;re truly enjoying yourself in this humble establishment?&quot;
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 01:27 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;I believe the term you&#39;re looking for is...melancholic. Of black bile.&quot; <br /><br />She watches the hands of a woman dealing cards. A cute one. <br /><br />&quot;Oh I am, what woman could be bored in such a fascinating place?&quot;<br /><br />Another sip, what a lovely taste. <br /><br />&quot;I merely wanted to rest and take in the ambience. Afterall, I am not a woman of the frontier. This place still has a certain...charm to me.&quot;
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 01:52 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;Yes, it&#39;s the people, really, that make or break a bar, don&#39;t they? After all, that&#39;s why I even bother with hosting the whole poker thing... Apart from the love of the game, of course,&quot; he added, knowingly.<br /><br />&quot;I can&#39;t help but notice you being quite attentive, quite adept at stitching together the intricate tapestry of... Men. In that, we might share more common interests than you&#39;d expect. But coming back to the point&quot; - a sip - &quot;if I could be graced by seeing you at work, what could you tell me about, say...&quot;, the Hangman twiddled the last letter in his mouth as he scanned the room for a suitable subject. His gaze lingered on one of the few heads to rise above the crowd that finally began to dissipate.<br /><br />&quot;How about that gal?&quot;, he asked. &quot;The tall one in a black hat. I do happen to know that&#39;s one <i>fascinating</i> kanuck and am just dying to know what you&#39;d make of her.&quot;
+
+                                <span class="chatlog__edited-timestamp" title="18-Sep-18 01:52 PM">(edited)</span>
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 02:05 PM</span>
+
+                        <div class="chatlog__content">
+                            /r 3d10 #Understanding+Corruption
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/209048672195969025/93b788e6f93c968f0fe25ec4d8c56aa8.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Sidekick#6198">Sidekick</span>
+                <span class="chatlog__timestamp">18-Sep-18 02:05 PM</span>
+
+                        <div class="chatlog__content">
+                            <span class="mention" title="Virric#5313">@Virric</span>:  <span class="pre pre--inline">3d10</span> Understanding+Corruption = (3+4+3) = 10
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 02:45 PM</span>
+
+                        <div class="chatlog__content">
+                            The woman takes a sip just a little too long, the creases in her mouth almost form a smile - for a moment. Adelaide looks back at the Hangman with a grin.<br /><br />&quot;She wears that scowl like an iron breastplate, but she&#39;s a lush. She drinks with a lot of...tongue action. Prefers whiskey and scotch typically but....I think she might find this drink <i>quite</i> agreeable.&quot; She says.<br /><br />She leans back.<br /><br />&quot;Oh this tastes like fire in the best way.&quot;
+
+                                <span class="chatlog__edited-timestamp" title="18-Sep-18 02:46 PM">(edited)</span>
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:05 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;Quite apt,&quot; the man agreed. &quot;After all, it was inspired by a certain volcano back in Italy. Oh, the view out there...&quot;<br /><br />&quot;... But speaking of your talents... I presume I do not have to further warn you about trying to prove your mettle against her liver. Or that man&#39;s,&quot; he added, pointing at a sailor on the other, far side of the room.<br /><br />&quot;Though perhaps my favorite, present company excluded, is that blonde blonde cavalryman over there. Well, former cavalryman. He strangled his own officer over a woman. Marvellous story.&quot;<br /><br />&quot;Ah, but I digress. There is a thing I&#39;ve been meaning to ask someone of your considerable talents. Seeing as you&#39;re not too preoccupied with the game, I&#39;ve been wondering if we could perhaps trade a few favors?..&quot;<br /><br />An eyebrow raised. In a practiced way, of course, but it got the message through.
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:06 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;Perhaps, what did you have in mind?&quot;
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:14 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;I have my reasons to believe there are... Some men and women that are not quite fond of this... <i>Ambience</i>, as you&#39;ve put it so succintly. It would be a shame if this feast of tabletop joy were to be disrupted, wouldn&#39;t it?&quot;<br /><br />Hangman finished his drink with one long gulp and cleared his throat.<br /><br />&quot;Regrettably, me and my associates are bound to... Extreme transparency to sustain the sportsmanship of this venture, which makes rooting out the more insidious elements rather troublesome. However, if some unaffiliated woman were to spot a plot about to spring... That would be quite another story, wouldn&#39;t it?&quot;
+
+                                <span class="chatlog__edited-timestamp" title="18-Sep-18 03:14 PM">(edited)</span>
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:17 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;Understandable. You must be <i>paragons</i> of virtue in such a situation. Such machinations would be...untoward.&quot;<br /><br />Adelaide takes a long sip herself. She can almost taste ash in her throat now, and she loves it. <br /><br />&quot;And what praytell, would this good samaritan be rewarded with?&quot;
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:20 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;Ah, but can&#39;t we consider this but a debt of gratitude?&quot;, he asked with innocence feigned so perfectly it almost felt insulting. &quot;After all, I believe I have proven quite a hospitable host.&quot;
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:33 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;Of course, of course.&quot; She smiles, but behind it her mind is working like a steam engine.<br /><br />This wasn&#39;t the time to oppose him. It was his battlefield and he had the advantage. But she could play along, for now. When she had something useful in hand she could, perhaps...turn the tables.
+
+                        </div>
+
+
+
+                        <div class="chatlog__content">
+                            /r 4d10
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/209048672195969025/93b788e6f93c968f0fe25ec4d8c56aa8.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Sidekick#6198">Sidekick</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:39 PM</span>
+
+                        <div class="chatlog__content">
+                            <span class="mention" title="Virric#5313">@Virric</span>:  <span class="pre pre--inline">4d10</span>  = (9+8+7+9) = 33
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:41 PM</span>
+
+                        <div class="chatlog__content">
+                            /r 9d10 #Did you really try to deceive the Deceiver?
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/209048672195969025/93b788e6f93c968f0fe25ec4d8c56aa8.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Sidekick#6198">Sidekick</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:41 PM</span>
+
+                        <div class="chatlog__content">
+                            <span class="mention" title="Lichtenstein#7215">@Lichtenstein</span>:  <span class="pre pre--inline">9d10</span> Did you really try to deceive the Deceiver? = (7+3+10+3+7+8+1+6+4) = 49
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:52 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;I am glad we came to an understanding,&quot; he nodded. You can tell - well, your gut tells you: this ain&#39;t a situation in which you&#39;re comfortable with making hard statements - that the man hasn&#39;t put much thought in what you feared: it appeared your interlocutor was fairly confident in how easily bribable you are.<br /><br />This was good. Very good. All that&#39;s left to do is not to let him get a reason to start thinking about that. After all, underestimation was Adelaide&#39;s third most useful tool in her line of work.<br /><br />&quot;All I ask for is... &quot;, the Hangman weighted his words, &quot;for you to keep your eyes wide open. If you do that well enough, I assure you any head you bring me shall be worth its weight in favors.&quot;
+
+                                <span class="chatlog__edited-timestamp" title="18-Sep-18 03:52 PM">(edited)</span>
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 03:57 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;Understood, now I believe it&#39;d best if you left me to my drink. I&#39;d be terribly unfortunate if our discussions hampered my efforts. &quot; I say. <br /><br />He&#39;s almost certainly lying, but Adelaide doesn&#39;t press. She got away with her skin intact with that pretty smile of hers. Funny, it works on everyone.
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/156174091974344704/4d3f7b4bbe5b5c43c057952e3eb66b01.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Lichtenstein#7215">Lichtenstein</span>
+                <span class="chatlog__timestamp">18-Sep-18 04:01 PM</span>
+
+                        <div class="chatlog__content">
+                            &quot;I am glad my faith in you had not been mistaken. However, as much as it pains me, I need to ask but one more courtesy of you to seal the deal and, uh, avoid hampering your efforts.&quot;<br /><br />&quot;My dear Adelaide, I would be most thankful if you could slap me and storm off right now.&quot;
+
+                        </div>
+
+
+
+            </div>
+        </div>
+        <div class="chatlog__message-group">
+            <div class="chatlog__author-avatar-container">
+                <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/290005419089330176/97c4722444776c62febdaead65e3b3f3.png" />
+            </div>            
+            <div class="chatlog__messages">
+                <span class="chatlog__author-name" title="Virric#5313">Virric</span>
+                <span class="chatlog__timestamp">18-Sep-18 04:10 PM</span>
+
+                        <div class="chatlog__content">
+                            She leans in, as if she needs to hear him whisper.<br /><br />&quot;Of course.&quot; <br /><br />A plan forms in her head. She pulls back, blushing. Her eyes turn to hateful little pinholes. <br /><br />&quot;I WILL DO NO SUCH THING, YOU DISGUSTING OAF!&quot; She says, not quite yelling, but loud enough to carry to a few nearby tables. Their whispering will be far more effective than full blown scene.<br /><br />She spits some of that lovely drink in his face before giving him a strident backhand and storming away, journal in hand. <br /><br />It&#39;s certainly the highlight of her afternoon.
+
+                                <span class="chatlog__edited-timestamp" title="18-Sep-18 04:11 PM">(edited)</span>
+                        </div>
+
+
+
+            </div>
+        </div>
+</div>
+
 </body>
 </html>
